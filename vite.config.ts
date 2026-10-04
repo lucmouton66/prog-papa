@@ -18,7 +18,7 @@ export default defineConfig({
         short_name: 'Prog Papa',
         description: 'Suivi du programme',
         theme_color: '#1d4ed8',
-        background_color: '#09090b',
+        background_color: '#fafafa',
         display: 'standalone',
         start_url: base,
         scope: base,

@@ -2,6 +2,7 @@ export interface Exercise {
   id: string
   name: string
   reps: string // ex: "10-12" ou "8"
+  unit?: 'reps' | 'secondes' // 'secondes' quand l'objectif est une durée à tenir (ex: "30-45s")
   note?: string // explication / consigne d'exécution
 }
 

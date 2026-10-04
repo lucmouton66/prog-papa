@@ -10,7 +10,7 @@ import { ReglagesPage } from './pages/ReglagesPage'
 function App() {
   return (
     <AppStoreProvider>
-      <div className="min-h-screen bg-zinc-950 text-zinc-100">
+      <div className="min-h-screen bg-zinc-50 text-zinc-900">
         <div className="mx-auto max-w-lg">
           <Routes>
             <Route path="/" element={<Navigate to="/seances" replace />} />

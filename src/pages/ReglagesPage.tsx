@@ -36,15 +36,15 @@ export function ReglagesPage() {
 
   return (
     <div className="space-y-6 p-4 pb-24">
-      <h1 className="text-2xl font-bold text-zinc-100">Réglages</h1>
+      <h1 className="text-2xl font-bold text-zinc-900">Réglages</h1>
 
       <section className="space-y-2">
-        <h2 className="text-lg font-semibold text-zinc-200">Taille du texte</h2>
+        <h2 className="text-lg font-semibold text-zinc-800">Taille du texte</h2>
         <div className="flex gap-2">
           <button
             onClick={() => setSize('normal')}
             className={`flex-1 rounded-xl py-3 font-medium ${
-              size === 'normal' ? 'bg-sky-600 text-white' : 'bg-zinc-800 text-zinc-300'
+              size === 'normal' ? 'bg-sky-600 text-white' : 'bg-zinc-100 text-zinc-600'
             }`}
           >
             Normal
@@ -52,7 +52,7 @@ export function ReglagesPage() {
           <button
             onClick={() => setSize('grand')}
             className={`flex-1 rounded-xl py-3 font-medium ${
-              size === 'grand' ? 'bg-sky-600 text-white' : 'bg-zinc-800 text-zinc-300'
+              size === 'grand' ? 'bg-sky-600 text-white' : 'bg-zinc-100 text-zinc-600'
             }`}
           >
             Grand
@@ -61,16 +61,16 @@ export function ReglagesPage() {
       </section>
 
       <section className="space-y-2">
-        <h2 className="text-lg font-semibold text-zinc-200">Sauvegarde</h2>
+        <h2 className="text-lg font-semibold text-zinc-800">Sauvegarde</h2>
         <button
           onClick={handleExport}
-          className="w-full rounded-xl bg-zinc-800 py-3 font-medium text-zinc-100 active:bg-zinc-700"
+          className="w-full rounded-xl bg-zinc-100 py-3 font-medium text-zinc-800 active:bg-zinc-200"
         >
           Exporter mes données
         </button>
         <button
           onClick={() => fileInputRef.current?.click()}
-          className="w-full rounded-xl bg-zinc-800 py-3 font-medium text-zinc-100 active:bg-zinc-700"
+          className="w-full rounded-xl bg-zinc-100 py-3 font-medium text-zinc-800 active:bg-zinc-200"
         >
           Importer une sauvegarde
         </button>
@@ -88,10 +88,10 @@ export function ReglagesPage() {
       </section>
 
       <section className="space-y-2">
-        <h2 className="text-lg font-semibold text-zinc-200">Réinitialiser</h2>
+        <h2 className="text-lg font-semibold text-zinc-800">Réinitialiser</h2>
         <button
           onClick={handleReset}
-          className="w-full rounded-xl border border-red-900 bg-red-950 py-3 font-medium text-red-300 active:bg-red-900"
+          className="w-full rounded-xl border border-red-200 bg-red-50 py-3 font-medium text-red-600 active:bg-red-100"
         >
           Tout effacer
         </button>
