@@ -91,8 +91,8 @@ export function SessionPlayerPage() {
             <div className="rounded-2xl bg-sky-50 border border-sky-200 p-4">
               <div className="text-lg font-bold text-sky-800">🔄 Circuit {circuit.name}</div>
               <div className="mt-1 text-sm text-sky-700/80">
-                Enchaîne les {circuit.exercises.length} exercices à la suite (1 tour), repose-toi{' '}
-                {circuit.repos}s, puis refais {circuit.tours} tours au total.
+                Fais {circuit.tours} tours au total : enchaîne les {circuit.exercises.length}{' '}
+                exercices à la suite, repose-toi {circuit.repos}s, puis recommence.
                 {circuit.intensite ? ` Intensité : ${circuit.intensite}.` : ''}
               </div>
               <button
