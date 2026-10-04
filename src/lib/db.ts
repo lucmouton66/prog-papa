@@ -37,13 +37,14 @@ function getDB() {
   return dbPromise
 }
 
+// Le programme est entièrement défini dans seedProgram.ts (pas d'édition dans l'app) :
+// on reconstruit toujours depuis le code pour que les mises à jour se propagent
+// automatiquement, et qu'un ancien programme mis en cache ne puisse jamais faire planter l'app.
 export async function getProgram(): Promise<Program> {
   const db = await getDB()
-  const existing = await db.get('program', PROGRAM_KEY)
-  if (existing) return existing
-  const seed = buildSeedProgram()
-  await db.put('program', seed, PROGRAM_KEY)
-  return seed
+  const program = buildSeedProgram()
+  await db.put('program', program, PROGRAM_KEY)
+  return program
 }
 
 export async function getAllSessions(): Promise<SessionLog[]> {
