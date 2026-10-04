@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useAppStore } from '../store/AppStore'
 import { useRestTimer } from '../hooks/useRestTimer'
 import { makeId } from '../lib/id'
@@ -12,26 +12,31 @@ function parseDefaultReps(reps: string): number {
 
 export function SessionPlayerPage() {
   const { dayId } = useParams<{ dayId: string }>()
-  const { program, recordSession } = useAppStore()
+  const { program, loading, recordSession } = useAppStore()
   const navigate = useNavigate()
   const { secondsLeft, start } = useRestTimer()
 
   const template = program?.sessions.find((s) => s.id === dayId)
 
-  const [exercises, setExercises] = useState<LoggedExercise[]>(() => {
-    if (!template) return []
-    return template.circuits.flatMap((circuit) =>
-      circuit.exercises.map((ex) => ({
-        exerciseId: ex.id,
-        exerciseName: ex.name,
-        sets: Array.from({ length: circuit.tours }, (): SetEntry => ({
-          reps: parseDefaultReps(ex.reps),
-          poids: 0,
-          fait: false,
+  const [exercises, setExercises] = useState<LoggedExercise[]>([])
+
+  useEffect(() => {
+    if (!template) return
+    setExercises(
+      template.circuits.flatMap((circuit) =>
+        circuit.exercises.map((ex) => ({
+          exerciseId: ex.id,
+          exerciseName: ex.name,
+          sets: Array.from({ length: circuit.tours }, (): SetEntry => ({
+            reps: parseDefaultReps(ex.reps),
+            poids: 0,
+            fait: false,
+          })),
         })),
-      })),
+      ),
     )
-  })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [template?.id])
 
   const exerciseIndexById = useMemo(() => {
     const map = new Map<string, number>()
@@ -45,9 +50,18 @@ export function SessionPlayerPage() {
     [exercises],
   )
 
+  if (loading) {
+    return <p className="p-6 text-center text-zinc-500">Chargement…</p>
+  }
+
   if (!template) {
     return <p className="p-6 text-center text-zinc-500">Séance introuvable.</p>
   }
+
+  const canGuide =
+    template.circuits.length === 1 &&
+    template.circuits[0].tours === 1 &&
+    template.circuits[0].exercises.every((ex) => ex.unit === 'secondes')
 
   function updateSet(exIndex: number, setIndex: number, patch: Partial<SetEntry>) {
     setExercises((prev) =>
@@ -78,6 +92,15 @@ export function SessionPlayerPage() {
           {doneSets} / {totalSets} séries faites
         </p>
       </div>
+
+      {canGuide && (
+        <Link
+          to={`/seance/${template.id}/guide`}
+          className="block rounded-2xl bg-sky-600 py-4 text-center text-lg font-bold text-white shadow-lg active:bg-sky-700"
+        >
+          ▶ Commencer (guidé, sans rien toucher)
+        </Link>
+      )}
 
       {secondsLeft !== null && (
         <div className="sticky top-2 z-10 rounded-2xl bg-sky-600 p-4 text-center text-xl font-bold text-white shadow-lg">

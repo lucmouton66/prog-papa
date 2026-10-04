@@ -3,6 +3,7 @@ import { AppStoreProvider } from './store/AppStore'
 import { BottomNav } from './components/BottomNav'
 import { SeancesPage } from './pages/SeancesPage'
 import { SessionPlayerPage } from './pages/SessionPlayerPage'
+import { GuidedFlowPage } from './pages/GuidedFlowPage'
 import { HistoriquePage } from './pages/HistoriquePage'
 import { SessionDetailPage } from './pages/SessionDetailPage'
 import { ReglagesPage } from './pages/ReglagesPage'
@@ -16,6 +17,7 @@ function App() {
             <Route path="/" element={<Navigate to="/seances" replace />} />
             <Route path="/seances" element={<SeancesPage />} />
             <Route path="/seance/:dayId" element={<SessionPlayerPage />} />
+            <Route path="/seance/:dayId/guide" element={<GuidedFlowPage />} />
             <Route path="/historique" element={<HistoriquePage />} />
             <Route path="/historique/:sessionId" element={<SessionDetailPage />} />
             <Route path="/reglages" element={<ReglagesPage />} />
