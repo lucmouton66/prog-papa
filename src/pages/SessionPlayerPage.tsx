@@ -89,18 +89,23 @@ export function SessionPlayerPage() {
         {template.circuits.map((circuit) => (
           <div key={circuit.id} className="space-y-3">
             <div className="rounded-2xl bg-sky-50 border border-sky-200 p-4">
-              <div className="text-lg font-bold text-sky-800">🔄 Circuit {circuit.name}</div>
+              <div className="text-lg font-bold text-sky-800">
+                {circuit.tours > 1 ? `🔄 Circuit ${circuit.name}` : circuit.name}
+              </div>
               <div className="mt-1 text-sm text-sky-700/80">
-                Fais {circuit.tours} tours au total : enchaîne les {circuit.exercises.length}{' '}
-                exercices à la suite, repose-toi {circuit.repos}s, puis recommence.
+                {circuit.tours > 1
+                  ? `Fais ${circuit.tours} tours au total : enchaîne les ${circuit.exercises.length} exercices à la suite, repose-toi ${circuit.repos}s, puis recommence.`
+                  : `Fais ces ${circuit.exercises.length} exercices à la suite, en tenant chaque position indiquée.`}
                 {circuit.intensite ? ` Intensité : ${circuit.intensite}.` : ''}
               </div>
-              <button
-                onClick={() => start(circuit.repos)}
-                className="mt-3 rounded-xl bg-sky-600 px-4 py-2 text-sm font-medium text-white active:bg-sky-700"
-              >
-                Repos entre les tours ({circuit.repos}s)
-              </button>
+              {circuit.tours > 1 && (
+                <button
+                  onClick={() => start(circuit.repos)}
+                  className="mt-3 rounded-xl bg-sky-600 px-4 py-2 text-sm font-medium text-white active:bg-sky-700"
+                >
+                  Repos entre les tours ({circuit.repos}s)
+                </button>
+              )}
             </div>
 
             {circuit.exercises.map((ex) => {
