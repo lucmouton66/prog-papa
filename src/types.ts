@@ -4,7 +4,8 @@ export interface Exercise {
   sets: number
   reps: string // ex: "10-12" ou "8"
   repos: number // secondes de repos conseillées
-  note?: string
+  intensite?: string // ex: "RPE 7"
+  note?: string // explication / consigne d'exécution
 }
 
 export interface SessionTemplate {

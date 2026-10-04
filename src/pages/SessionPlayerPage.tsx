@@ -83,7 +83,11 @@ export function SessionPlayerPage() {
             <div className="mb-3 flex items-center justify-between">
               <div>
                 <div className="text-lg font-semibold text-zinc-100">{ex.name}</div>
-                <div className="text-sm text-zinc-400">Objectif : {ex.sets} x {ex.reps}</div>
+                <div className="text-sm text-zinc-400">
+                  Objectif : {ex.sets} x {ex.reps}
+                  {ex.intensite ? ` · ${ex.intensite}` : ''}
+                </div>
+                {ex.note && <div className="mt-1 text-sm text-zinc-500">{ex.note}</div>}
               </div>
               {ex.repos > 0 && (
                 <button
