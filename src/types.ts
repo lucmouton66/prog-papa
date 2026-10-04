@@ -1,17 +1,23 @@
 export interface Exercise {
   id: string
   name: string
-  sets: number
   reps: string // ex: "10-12" ou "8"
-  repos: number // secondes de repos conseillées
-  intensite?: string // ex: "RPE 7"
   note?: string // explication / consigne d'exécution
+}
+
+export interface Circuit {
+  id: string
+  name: string // ex: "Mobilité", "Renfo + Prévention"
+  tours: number // nombre de tours du circuit
+  repos: number // secondes de repos entre chaque tour
+  intensite?: string // ex: "RPE 7"
+  exercises: Exercise[]
 }
 
 export interface SessionTemplate {
   id: string
   name: string
-  exercises: Exercise[]
+  circuits: Circuit[]
 }
 
 export interface Program {

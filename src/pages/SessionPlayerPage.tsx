@@ -20,16 +20,24 @@ export function SessionPlayerPage() {
 
   const [exercises, setExercises] = useState<LoggedExercise[]>(() => {
     if (!template) return []
-    return template.exercises.map((ex) => ({
-      exerciseId: ex.id,
-      exerciseName: ex.name,
-      sets: Array.from({ length: ex.sets }, (): SetEntry => ({
-        reps: parseDefaultReps(ex.reps),
-        poids: 0,
-        fait: false,
+    return template.circuits.flatMap((circuit) =>
+      circuit.exercises.map((ex) => ({
+        exerciseId: ex.id,
+        exerciseName: ex.name,
+        sets: Array.from({ length: circuit.tours }, (): SetEntry => ({
+          reps: parseDefaultReps(ex.reps),
+          poids: 0,
+          fait: false,
+        })),
       })),
-    }))
+    )
   })
+
+  const exerciseIndexById = useMemo(() => {
+    const map = new Map<string, number>()
+    exercises.forEach((ex, i) => map.set(ex.exerciseId, i))
+    return map
+  }, [exercises])
 
   const totalSets = useMemo(() => exercises.reduce((acc, e) => acc + e.sets.length, 0), [exercises])
   const doneSets = useMemo(
@@ -63,7 +71,7 @@ export function SessionPlayerPage() {
   }
 
   return (
-    <div className="space-y-4 p-4 pb-32">
+    <div className="space-y-6 p-4 pb-32">
       <div>
         <h1 className="text-2xl font-bold text-zinc-100">{template.name}</h1>
         <p className="text-zinc-400">
@@ -77,62 +85,76 @@ export function SessionPlayerPage() {
         </div>
       )}
 
-      <div className="space-y-4">
-        {template.exercises.map((ex, exIndex) => (
-          <div key={ex.id} className="rounded-2xl border border-zinc-800 bg-zinc-900 p-4">
-            <div className="mb-3 flex items-center justify-between">
-              <div>
-                <div className="text-lg font-semibold text-zinc-100">{ex.name}</div>
-                <div className="text-sm text-zinc-400">
-                  Objectif : {ex.sets} x {ex.reps}
-                  {ex.intensite ? ` · ${ex.intensite}` : ''}
-                </div>
-                {ex.note && <div className="mt-1 text-sm text-zinc-500">{ex.note}</div>}
+      <div className="space-y-8">
+        {template.circuits.map((circuit) => (
+          <div key={circuit.id} className="space-y-3">
+            <div className="rounded-2xl bg-sky-950/60 border border-sky-900 p-4">
+              <div className="text-lg font-bold text-sky-200">🔄 Circuit {circuit.name}</div>
+              <div className="mt-1 text-sm text-sky-300/80">
+                Enchaîne les {circuit.exercises.length} exercices à la suite (1 tour), repose-toi{' '}
+                {circuit.repos}s, puis refais {circuit.tours} tours au total.
+                {circuit.intensite ? ` Intensité : ${circuit.intensite}.` : ''}
               </div>
-              {ex.repos > 0 && (
-                <button
-                  onClick={() => start(ex.repos)}
-                  className="rounded-xl bg-zinc-800 px-3 py-2 text-sm font-medium text-zinc-200 active:bg-zinc-700"
-                >
-                  Repos {ex.repos}s
-                </button>
-              )}
+              <button
+                onClick={() => start(circuit.repos)}
+                className="mt-3 rounded-xl bg-sky-800 px-4 py-2 text-sm font-medium text-sky-100 active:bg-sky-700"
+              >
+                Repos entre les tours ({circuit.repos}s)
+              </button>
             </div>
 
-            <div className="space-y-2">
-              {exercises[exIndex]?.sets.map((set, setIndex) => (
-                <div key={setIndex} className="flex items-center gap-2">
-                  <span className="w-6 text-center text-zinc-500">{setIndex + 1}</span>
-                  <input
-                    type="number"
-                    inputMode="numeric"
-                    value={set.reps}
-                    onChange={(e) => updateSet(exIndex, setIndex, { reps: Number(e.target.value) })}
-                    className="w-20 rounded-xl border border-zinc-700 bg-zinc-800 p-3 text-center text-lg text-zinc-100"
-                    aria-label="Répétitions"
-                  />
-                  <span className="text-zinc-500">reps</span>
-                  <input
-                    type="number"
-                    inputMode="decimal"
-                    value={set.poids}
-                    onChange={(e) => updateSet(exIndex, setIndex, { poids: Number(e.target.value) })}
-                    className="w-20 rounded-xl border border-zinc-700 bg-zinc-800 p-3 text-center text-lg text-zinc-100"
-                    aria-label="Poids"
-                  />
-                  <span className="text-zinc-500">kg</span>
-                  <button
-                    onClick={() => updateSet(exIndex, setIndex, { fait: !set.fait })}
-                    className={`ml-auto h-12 w-12 rounded-xl text-2xl ${
-                      set.fait ? 'bg-emerald-600 text-white' : 'bg-zinc-800 text-zinc-500'
-                    }`}
-                    aria-label="Série faite"
-                  >
-                    ✓
-                  </button>
+            {circuit.exercises.map((ex) => {
+              const exIndex = exerciseIndexById.get(ex.id)
+              if (exIndex === undefined) return null
+              return (
+                <div key={ex.id} className="rounded-2xl border border-zinc-800 bg-zinc-900 p-4">
+                  <div className="mb-3">
+                    <div className="text-lg font-semibold text-zinc-100">{ex.name}</div>
+                    <div className="text-sm text-zinc-400">Objectif : {ex.reps}</div>
+                    {ex.note && <div className="mt-1 text-sm text-zinc-500">{ex.note}</div>}
+                  </div>
+
+                  <div className="space-y-2">
+                    {exercises[exIndex]?.sets.map((set, setIndex) => (
+                      <div key={setIndex} className="flex items-center gap-2">
+                        <span className="w-6 text-center text-zinc-500">{setIndex + 1}</span>
+                        <input
+                          type="number"
+                          inputMode="numeric"
+                          value={set.reps}
+                          onChange={(e) =>
+                            updateSet(exIndex, setIndex, { reps: Number(e.target.value) })
+                          }
+                          className="w-20 rounded-xl border border-zinc-700 bg-zinc-800 p-3 text-center text-lg text-zinc-100"
+                          aria-label="Répétitions"
+                        />
+                        <span className="text-zinc-500">reps</span>
+                        <input
+                          type="number"
+                          inputMode="decimal"
+                          value={set.poids}
+                          onChange={(e) =>
+                            updateSet(exIndex, setIndex, { poids: Number(e.target.value) })
+                          }
+                          className="w-20 rounded-xl border border-zinc-700 bg-zinc-800 p-3 text-center text-lg text-zinc-100"
+                          aria-label="Poids"
+                        />
+                        <span className="text-zinc-500">kg</span>
+                        <button
+                          onClick={() => updateSet(exIndex, setIndex, { fait: !set.fait })}
+                          className={`ml-auto h-12 w-12 rounded-xl text-2xl ${
+                            set.fait ? 'bg-emerald-600 text-white' : 'bg-zinc-800 text-zinc-500'
+                          }`}
+                          aria-label="Série faite"
+                        >
+                          ✓
+                        </button>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              ))}
-            </div>
+              )
+            })}
           </div>
         ))}
       </div>

@@ -24,7 +24,9 @@ export function SeancesPage() {
             className="block rounded-2xl border border-zinc-800 bg-zinc-900 p-5 active:bg-zinc-800"
           >
             <div className="text-xl font-semibold text-zinc-100">{session.name}</div>
-            <div className="mt-1 text-zinc-400">{session.exercises.length} exercice(s)</div>
+            <div className="mt-1 text-zinc-400">
+              {session.circuits.map((c) => c.name).join(' + ')}
+            </div>
           </Link>
         ))}
       </div>
