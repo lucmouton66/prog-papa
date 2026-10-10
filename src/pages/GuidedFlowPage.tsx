@@ -137,13 +137,13 @@ export function GuidedFlowPage() {
   const progress = ((total - secondsLeft) / total) * 100
 
   return (
-    <div className="flex h-screen flex-col items-center gap-2 overflow-y-auto bg-zinc-50 px-4 pb-20 pt-4 text-center">
-      <div className="text-sm text-zinc-400">
+    <div className="flex h-screen flex-col items-center gap-1 overflow-y-auto bg-zinc-50 px-4 pb-16 pt-2 text-center">
+      <div className="text-xs text-zinc-400">
         {index + 1} / {flow.length}
       </div>
-      <div className="text-2xl font-bold text-zinc-900">
+      <div className="text-xl font-bold leading-tight text-zinc-900">
         {current.name}
-        {step.otherSide && <span className="block text-lg font-semibold text-sky-600">Autre côté</span>}
+        {step.otherSide && <span className="block text-base font-semibold text-sky-600">Autre côté</span>}
       </div>
       {current.video && (
         <video
@@ -153,19 +153,20 @@ export function GuidedFlowPage() {
           muted
           loop
           playsInline
-          className="max-h-[40vh] w-auto rounded-2xl object-contain shadow-lg"
+          className="max-h-[30vh] w-auto rounded-2xl object-contain shadow-lg"
         />
       )}
-      {current.note && <p className="max-w-sm text-sm text-zinc-500">{current.note}</p>}
-      <div className="flex-1" />
-      <div className="text-sm font-semibold uppercase tracking-wide text-sky-600">
+      {current.note && (
+        <p className="max-w-sm text-xs leading-snug text-zinc-500">{current.note}</p>
+      )}
+      <div className="text-xs font-semibold uppercase tracking-wide text-sky-600">
         {phase === 'ready' ? 'Prépare-toi' : 'Tiens la position'}
       </div>
-      <div className="text-6xl font-black tabular-nums text-sky-600">{secondsLeft}</div>
+      <div className="text-5xl font-black tabular-nums text-sky-600">{secondsLeft}</div>
       <div className="h-2 w-full max-w-xs overflow-hidden rounded-full bg-zinc-200">
         <div className="h-full bg-sky-600 transition-all" style={{ width: `${progress}%` }} />
       </div>
-      <div className="mb-2 flex gap-2">
+      <div className="mt-1 flex gap-2">
         <button
           onClick={() => setPaused((p) => !p)}
           className="rounded-xl bg-zinc-100 px-4 py-3 text-sm font-medium text-zinc-700 active:bg-zinc-200"
