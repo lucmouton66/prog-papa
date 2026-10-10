@@ -117,6 +117,17 @@ export function GuidedFlowPage() {
         {index + 1} / {exercises.length}
       </div>
       <div className="text-3xl font-bold text-zinc-900">{current.name}</div>
+      {current.video && (
+        <video
+          key={current.id}
+          src={`${import.meta.env.BASE_URL}videos/${current.video}`}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full max-w-xs rounded-2xl shadow-lg"
+        />
+      )}
       {current.note && <p className="max-w-sm text-zinc-500">{current.note}</p>}
       <div className="text-sm font-semibold uppercase tracking-wide text-sky-600">
         {phase === 'ready' ? 'Prépare-toi' : 'Tiens la position'}

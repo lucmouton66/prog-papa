@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useAppStore } from '../store/AppStore'
 import { useRestTimer } from '../hooks/useRestTimer'
 import { makeId } from '../lib/id'
+import { VideoModal } from '../components/VideoModal'
 import type { LoggedExercise, SetEntry } from '../types'
 
 function parseDefaultReps(reps: string): number {
@@ -19,6 +20,7 @@ export function SessionPlayerPage() {
   const template = program?.sessions.find((s) => s.id === dayId)
 
   const [exercises, setExercises] = useState<LoggedExercise[]>([])
+  const [videoOpen, setVideoOpen] = useState<{ src: string; title: string } | null>(null)
 
   useEffect(() => {
     if (!template) return
@@ -137,10 +139,22 @@ export function SessionPlayerPage() {
               const unitLabel = ex.unit === 'secondes' ? 'sec' : 'reps'
               return (
                 <div key={ex.id} className="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm">
-                  <div className="mb-3">
-                    <div className="text-lg font-semibold text-zinc-900">{ex.name}</div>
-                    <div className="text-sm text-zinc-500">Objectif : {ex.reps}</div>
-                    {ex.note && <div className="mt-1 text-sm text-zinc-500">{ex.note}</div>}
+                  <div className="mb-3 flex items-start justify-between gap-3">
+                    <div>
+                      <div className="text-lg font-semibold text-zinc-900">{ex.name}</div>
+                      <div className="text-sm text-zinc-500">Objectif : {ex.reps}</div>
+                      {ex.note && <div className="mt-1 text-sm text-zinc-500">{ex.note}</div>}
+                    </div>
+                    {ex.video && (
+                      <button
+                        onClick={() => setVideoOpen({ src: ex.video!, title: ex.name })}
+                        className="flex shrink-0 flex-col items-center gap-1 rounded-xl bg-sky-50 px-3 py-2 text-sky-700 active:bg-sky-100"
+                        aria-label="Voir la vidéo"
+                      >
+                        <span className="text-xl">🎥</span>
+                        <span className="text-xs font-medium">Vidéo</span>
+                      </button>
+                    )}
                   </div>
 
                   <div className="space-y-2">
@@ -194,6 +208,14 @@ export function SessionPlayerPage() {
       >
         Terminer la séance
       </button>
+
+      {videoOpen && (
+        <VideoModal
+          src={videoOpen.src}
+          title={videoOpen.title}
+          onClose={() => setVideoOpen(null)}
+        />
+      )}
     </div>
   )
 }

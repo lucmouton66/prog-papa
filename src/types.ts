@@ -4,6 +4,7 @@ export interface Exercise {
   reps: string // ex: "10-12" ou "8"
   unit?: 'reps' | 'secondes' // 'secondes' quand l'objectif est une durée à tenir (ex: "30-45s")
   note?: string // explication / consigne d'exécution
+  video?: string // nom du fichier dans public/videos/ (ex: "p-mar-1.mp4")
 }
 
 export interface Circuit {
