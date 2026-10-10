@@ -21,18 +21,21 @@ export function buildSeedProgram(): Program {
             exercises: [
               {
                 id: 'p-mar-1',
+                video: 'p-mar-1.mp4',
                 name: 'Contraction + assouplissement bras tendu',
                 reps: '5 x (5s/5s) / bras',
                 note: 'Bras tendu devant toi : contracte 5s puis relâche/étire 5s, alterne par bras.',
               },
               {
                 id: 'p-mar-2',
+                video: 'p-mar-2.mp4',
                 name: 'Circle',
                 reps: '6',
                 note: "Allongé au sol, trace un grand cercle avec le bras en cherchant l'amplitude max : va devant puis repars derrière, rotation du poignet à 180° au milieu.",
               },
               {
                 id: 'p-mar-3',
+                video: 'p-mar-3.mp4',
                 name: 'Squat profond',
                 reps: '30-45s',
                 unit: 'secondes',
@@ -49,6 +52,7 @@ export function buildSeedProgram(): Program {
             exercises: [
               {
                 id: 'p-mar-4',
+                video: 'p-mar-4.mp4',
                 name: 'Iso fentes bulgare + traction élastique',
                 reps: '30-45s',
                 unit: 'secondes',
@@ -56,24 +60,28 @@ export function buildSeedProgram(): Program {
               },
               {
                 id: 'p-mar-5',
+                video: 'p-mar-5.mp4',
                 name: 'Ponté pelvien + abduction',
                 reps: '12',
                 note: 'Pont fessier au sol, écarte les genoux (élastique) en haut du mouvement.',
               },
               {
                 id: 'p-mar-6',
+                video: 'p-mar-6.mp4',
                 name: 'Dead bug',
                 reps: '16-20',
                 note: 'Allongé sur le dos, bas du dos plaqué au sol, étends bras et jambe opposés en alternance.',
               },
               {
                 id: 'p-mar-7',
+                video: 'p-mar-7.mp4',
                 name: 'Planche latérale + tirage',
                 reps: '10/côté',
                 note: "Gainage latéral + tirage (rowing) avec l'élastique du bras libre.",
               },
               {
                 id: 'p-mar-8',
+                video: 'p-mar-8.mp4',
                 name: 'Palof press OH',
                 reps: '10/côté',
                 note: 'Élastique tendu sur le côté : pousse les bras au-dessus de la tête en résistant à la rotation.',
@@ -94,18 +102,21 @@ export function buildSeedProgram(): Program {
             exercises: [
               {
                 id: 'p-jeu-1',
+                video: 'p-jeu-1.mp4',
                 name: 'RE / RI au sol',
                 reps: '5 x (5s/5s) / bras',
                 note: "Allongé sur le côté, bras à 90° de l'épaule : pousse 5s vers le bas (rotation interne) puis 5s vers le haut (rotation externe).",
               },
               {
                 id: 'p-jeu-2',
+                video: 'p-jeu-2.mp4',
                 name: 'Pigeon pose dynamique',
                 reps: '5 x 5s amplitude max',
                 note: "Posture du pigeon en mouvement répété, cherche l'amplitude max à chaque répétition.",
               },
               {
                 id: 'p-jeu-3',
+                video: 'p-jeu-3.mp4',
                 name: 'Superman',
                 reps: '20-30s',
                 unit: 'secondes',
@@ -122,24 +133,28 @@ export function buildSeedProgram(): Program {
             exercises: [
               {
                 id: 'p-jeu-4',
+                video: 'p-jeu-4.mp4',
                 name: 'Tirage + R2 OH',
                 reps: '12/bras',
                 note: 'Tirage (rowing) classique puis termine en montant la main au-dessus de la tête.',
               },
               {
                 id: 'p-jeu-5',
+                video: 'p-jeu-5.mp4',
                 name: 'Pompes excentrique',
                 reps: '10',
                 note: 'Pompes en ralentissant la descente au maximum.',
               },
               {
                 id: 'p-jeu-6',
+                video: 'p-jeu-6.mp4',
                 name: 'Pistol excentrique sur banc',
                 reps: '6/côté',
                 note: 'Squat une jambe assisté par le banc, descente contrôlée.',
               },
               {
                 id: 'p-jeu-7',
+                video: 'p-jeu-7.mp4',
                 name: 'Monster walk',
                 reps: '10/côté',
                 note: 'Élastique aux chevilles/genoux, marche latérale en squat partiel.',
@@ -160,18 +175,21 @@ export function buildSeedProgram(): Program {
             exercises: [
               {
                 id: 'p-sam-1',
+                video: 'p-sam-1.mp4',
                 name: 'Cars hanche',
                 reps: '6/côté',
                 note: "Rotation articulaire contrôlée de la hanche : cherche l'amplitude max dans tous les sens.",
               },
               {
                 id: 'p-sam-2',
+                video: 'p-sam-2.mp4',
                 name: 'Contraction + assouplissement bras tendu',
                 reps: '5 x (5s/5s) / bras',
                 note: 'Bras tendu devant toi : contracte 5s puis relâche/étire 5s, alterne par bras.',
               },
               {
                 id: 'p-sam-3',
+                video: 'p-sam-3.mp4',
                 name: 'OH squat avec élastique',
                 reps: '10',
                 note: 'Squat bras tendus au-dessus de la tête, élastique placé autour des genoux.',
@@ -187,24 +205,28 @@ export function buildSeedProgram(): Program {
             exercises: [
               {
                 id: 'p-sam-4',
+                video: 'p-sam-4.mp4',
                 name: 'Bird dog',
                 reps: '8/côté',
                 note: 'Quadrupédie, étends bras et jambe opposés en gardant le dos stable.',
               },
               {
                 id: 'p-sam-5',
+                video: 'p-sam-5.mp4',
                 name: 'Tirage bûcheron controlatéral',
                 reps: '10/côté',
                 note: 'Genou droit sur le banc, main droite qui tire, jambe gauche tendue en arrière, ramène le coude vers la hanche.',
               },
               {
                 id: 'p-sam-6',
+                video: 'p-sam-6.mp4',
                 name: 'Écarté haltère',
                 reps: '10',
                 note: 'Couché sur le banc, écarté avec haltères pour les pectoraux.',
               },
               {
                 id: 'p-sam-7',
+                video: 'p-sam-7.mp4',
                 name: 'Hollow',
                 reps: '20-40s',
                 unit: 'secondes',
@@ -226,6 +248,7 @@ export function buildSeedProgram(): Program {
             exercises: [
               {
                 id: 'etir-1',
+                video: 'etir-1.mp4',
                 name: 'Pectoraux',
                 reps: '30/côté',
                 unit: 'secondes',
@@ -233,6 +256,7 @@ export function buildSeedProgram(): Program {
               },
               {
                 id: 'etir-2',
+                video: 'etir-2.mp4',
                 name: 'Triceps',
                 reps: '30/côté',
                 unit: 'secondes',
@@ -240,6 +264,7 @@ export function buildSeedProgram(): Program {
               },
               {
                 id: 'etir-3',
+                video: 'etir-3.mp4',
                 name: 'Grand dorsal',
                 reps: '30/côté',
                 unit: 'secondes',
@@ -247,6 +272,7 @@ export function buildSeedProgram(): Program {
               },
               {
                 id: 'etir-4',
+                video: 'etir-4.mp4',
                 name: 'Lombaires',
                 reps: '30',
                 unit: 'secondes',
@@ -254,6 +280,7 @@ export function buildSeedProgram(): Program {
               },
               {
                 id: 'etir-5',
+                video: 'etir-5.mp4',
                 name: 'Fessiers',
                 reps: '30/côté',
                 unit: 'secondes',
@@ -261,6 +288,7 @@ export function buildSeedProgram(): Program {
               },
               {
                 id: 'etir-6',
+                video: 'etir-6.mp4',
                 name: 'Piriforme',
                 reps: '30/côté',
                 unit: 'secondes',
@@ -268,6 +296,7 @@ export function buildSeedProgram(): Program {
               },
               {
                 id: 'etir-7',
+                video: 'etir-7.mp4',
                 name: 'Ischio-jambiers',
                 reps: '30/côté',
                 unit: 'secondes',
@@ -275,6 +304,7 @@ export function buildSeedProgram(): Program {
               },
               {
                 id: 'etir-8',
+                video: 'etir-8.mp4',
                 name: 'Adducteurs',
                 reps: '30',
                 unit: 'secondes',
@@ -282,6 +312,7 @@ export function buildSeedProgram(): Program {
               },
               {
                 id: 'etir-9',
+                video: 'etir-9.mp4',
                 name: 'Pigeon pose',
                 reps: '30/côté',
                 unit: 'secondes',
@@ -289,6 +320,7 @@ export function buildSeedProgram(): Program {
               },
               {
                 id: 'etir-10',
+                video: 'etir-10.mp4',
                 name: 'Mollets',
                 reps: '30/côté',
                 unit: 'secondes',
@@ -296,6 +328,7 @@ export function buildSeedProgram(): Program {
               },
               {
                 id: 'etir-11',
+                video: 'etir-11.mp4',
                 name: 'Quadriceps',
                 reps: '30/côté',
                 unit: 'secondes',
@@ -303,6 +336,7 @@ export function buildSeedProgram(): Program {
               },
               {
                 id: 'etir-12',
+                video: 'etir-12.mp4',
                 name: 'Psoas (fléchisseurs de hanche)',
                 reps: '30/côté',
                 unit: 'secondes',
