@@ -1,16 +1,29 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useAppStore } from '../store/AppStore'
 import { makeId } from '../lib/id'
 import { playBeep } from '../lib/beep'
+import type { Exercise } from '../types'
 
-const READY_SECONDS = 7
+const READY_SECONDS = 5
+const HOLD_SECONDS = 30
 
 type Phase = 'ready' | 'hold'
 
-function parseDuration(reps: string): number {
-  const match = reps.match(/\d+/)
-  return match ? Number(match[0]) : 30
+interface FlowStep {
+  exercise: Exercise
+  otherSide: boolean
+}
+
+function buildFlow(exercises: Exercise[]): FlowStep[] {
+  return exercises.flatMap((ex) =>
+    ex.reps.includes('/côté')
+      ? [
+          { exercise: ex, otherSide: false },
+          { exercise: ex, otherSide: true },
+        ]
+      : [{ exercise: ex, otherSide: false }],
+  )
 }
 
 export function GuidedFlowPage() {
@@ -19,7 +32,8 @@ export function GuidedFlowPage() {
   const navigate = useNavigate()
 
   const template = program?.sessions.find((s) => s.id === dayId)
-  const exercises = template?.circuits.flatMap((c) => c.exercises) ?? []
+  const exercises = useMemo(() => template?.circuits.flatMap((c) => c.exercises) ?? [], [template])
+  const flow = useMemo(() => buildFlow(exercises), [exercises])
 
   const [index, setIndex] = useState(0)
   const [phase, setPhase] = useState<Phase>('ready')
@@ -28,7 +42,8 @@ export function GuidedFlowPage() {
   const [finished, setFinished] = useState(false)
   const wakeLockRef = useRef<{ release: () => Promise<void> } | null>(null)
 
-  const current = exercises[index]
+  const step = flow[index]
+  const current = step?.exercise
 
   useEffect(() => {
     const nav = navigator as Navigator & {
@@ -46,14 +61,14 @@ export function GuidedFlowPage() {
   }, [])
 
   useEffect(() => {
-    if (finished || paused || !current) return
+    if (finished || paused || !step) return
     if (secondsLeft <= 0) {
       if (phase === 'ready') {
         playBeep(660, 200)
         if (navigator.vibrate) navigator.vibrate(200)
         setPhase('hold')
-        setSecondsLeft(parseDuration(current.reps))
-      } else if (index + 1 < exercises.length) {
+        setSecondsLeft(HOLD_SECONDS)
+      } else if (index + 1 < flow.length) {
         playBeep(880, 150)
         if (navigator.vibrate) navigator.vibrate([100, 60, 100])
         setIndex((i) => i + 1)
@@ -68,7 +83,7 @@ export function GuidedFlowPage() {
     }
     const t = setTimeout(() => setSecondsLeft((s) => s - 1), 1000)
     return () => clearTimeout(t)
-  }, [secondsLeft, phase, paused, finished, index, exercises.length, current])
+  }, [secondsLeft, phase, paused, finished, index, flow.length, step])
 
   async function handleFinish() {
     if (!template) return
@@ -80,7 +95,7 @@ export function GuidedFlowPage() {
       exercises: exercises.map((ex) => ({
         exerciseId: ex.id,
         exerciseName: ex.name,
-        sets: [{ reps: parseDuration(ex.reps), poids: 0, fait: true }],
+        sets: [{ reps: HOLD_SECONDS, poids: 0, fait: true }],
       })),
     })
     navigate('/historique')
@@ -90,7 +105,7 @@ export function GuidedFlowPage() {
     return <p className="p-6 text-center text-zinc-500">Chargement…</p>
   }
 
-  if (!template || exercises.length === 0) {
+  if (!template || flow.length === 0) {
     return <p className="p-6 text-center text-zinc-500">Séance introuvable.</p>
   }
 
@@ -108,15 +123,18 @@ export function GuidedFlowPage() {
     )
   }
 
-  const total = phase === 'ready' ? READY_SECONDS : parseDuration(current.reps)
+  const total = phase === 'ready' ? READY_SECONDS : HOLD_SECONDS
   const progress = ((total - secondsLeft) / total) * 100
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-zinc-50 p-6 text-center">
       <div className="text-sm text-zinc-400">
-        {index + 1} / {exercises.length}
+        {index + 1} / {flow.length}
       </div>
-      <div className="text-3xl font-bold text-zinc-900">{current.name}</div>
+      <div className="text-3xl font-bold text-zinc-900">
+        {current.name}
+        {step.otherSide && <span className="block text-xl font-semibold text-sky-600">Autre côté</span>}
+      </div>
       {current.video && (
         <video
           key={current.id}
