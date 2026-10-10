@@ -85,6 +85,16 @@ export function GuidedFlowPage() {
     return () => clearTimeout(t)
   }, [secondsLeft, phase, paused, finished, index, flow.length, step])
 
+  function skipStep() {
+    if (index + 1 < flow.length) {
+      setIndex((i) => i + 1)
+      setPhase('ready')
+      setSecondsLeft(READY_SECONDS)
+    } else {
+      setFinished(true)
+    }
+  }
+
   async function handleFinish() {
     if (!template) return
     await recordSession({
@@ -143,7 +153,7 @@ export function GuidedFlowPage() {
           muted
           loop
           playsInline
-          className="max-h-[28vh] w-auto rounded-2xl object-contain shadow-lg"
+          className="max-h-[40vh] w-auto rounded-2xl object-contain shadow-lg"
         />
       )}
       {current.note && <p className="max-w-sm text-sm text-zinc-500">{current.note}</p>}
@@ -155,16 +165,22 @@ export function GuidedFlowPage() {
       <div className="h-2 w-full max-w-xs overflow-hidden rounded-full bg-zinc-200">
         <div className="h-full bg-sky-600 transition-all" style={{ width: `${progress}%` }} />
       </div>
-      <div className="mb-2 flex gap-3">
+      <div className="mb-2 flex gap-2">
         <button
           onClick={() => setPaused((p) => !p)}
-          className="rounded-xl bg-zinc-100 px-6 py-3 font-medium text-zinc-700 active:bg-zinc-200"
+          className="rounded-xl bg-zinc-100 px-4 py-3 text-sm font-medium text-zinc-700 active:bg-zinc-200"
         >
           {paused ? 'Reprendre' : 'Pause'}
         </button>
         <button
+          onClick={skipStep}
+          className="rounded-xl bg-zinc-100 px-4 py-3 text-sm font-medium text-zinc-700 active:bg-zinc-200"
+        >
+          Passer
+        </button>
+        <button
           onClick={() => navigate(-1)}
-          className="rounded-xl bg-zinc-100 px-6 py-3 font-medium text-zinc-700 active:bg-zinc-200"
+          className="rounded-xl bg-zinc-100 px-4 py-3 text-sm font-medium text-zinc-700 active:bg-zinc-200"
         >
           Quitter
         </button>
