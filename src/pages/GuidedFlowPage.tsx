@@ -137,7 +137,7 @@ export function GuidedFlowPage() {
   const progress = ((total - secondsLeft) / total) * 100
 
   return (
-    <div className="flex h-screen flex-col items-center gap-1 overflow-y-auto bg-zinc-50 px-4 pb-16 pt-2 text-center">
+    <div className="flex h-screen flex-col items-center gap-1 overflow-y-auto bg-zinc-50 px-4 pb-24 pt-2 text-center">
       <div className="text-xs text-zinc-400">
         {index + 1} / {flow.length}
       </div>
@@ -146,15 +146,17 @@ export function GuidedFlowPage() {
         {step.otherSide && <span className="block text-base font-semibold text-sky-600">Autre côté</span>}
       </div>
       {current.video && (
-        <video
-          key={current.id}
-          src={`${import.meta.env.BASE_URL}videos/${current.video}`}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="max-h-[30vh] w-auto rounded-2xl object-contain shadow-lg"
-        />
+        <div className="flex min-h-0 w-full flex-1 items-center justify-center">
+          <video
+            key={current.id}
+            src={`${import.meta.env.BASE_URL}videos/${current.video}`}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="max-h-full max-w-full rounded-2xl object-contain shadow-lg"
+          />
+        </div>
       )}
       {current.note && (
         <p className="max-w-sm text-xs leading-snug text-zinc-500">{current.note}</p>
