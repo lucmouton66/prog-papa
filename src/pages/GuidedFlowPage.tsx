@@ -127,13 +127,13 @@ export function GuidedFlowPage() {
   const progress = ((total - secondsLeft) / total) * 100
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-zinc-50 p-6 text-center">
+    <div className="flex h-screen flex-col items-center gap-2 overflow-y-auto bg-zinc-50 px-4 pb-20 pt-4 text-center">
       <div className="text-sm text-zinc-400">
         {index + 1} / {flow.length}
       </div>
-      <div className="text-3xl font-bold text-zinc-900">
+      <div className="text-2xl font-bold text-zinc-900">
         {current.name}
-        {step.otherSide && <span className="block text-xl font-semibold text-sky-600">Autre côté</span>}
+        {step.otherSide && <span className="block text-lg font-semibold text-sky-600">Autre côté</span>}
       </div>
       {current.video && (
         <video
@@ -143,18 +143,19 @@ export function GuidedFlowPage() {
           muted
           loop
           playsInline
-          className="w-full max-w-xs rounded-2xl shadow-lg"
+          className="max-h-[28vh] w-auto rounded-2xl object-contain shadow-lg"
         />
       )}
-      {current.note && <p className="max-w-sm text-zinc-500">{current.note}</p>}
+      {current.note && <p className="max-w-sm text-sm text-zinc-500">{current.note}</p>}
+      <div className="flex-1" />
       <div className="text-sm font-semibold uppercase tracking-wide text-sky-600">
         {phase === 'ready' ? 'Prépare-toi' : 'Tiens la position'}
       </div>
-      <div className="text-7xl font-black tabular-nums text-sky-600">{secondsLeft}</div>
+      <div className="text-6xl font-black tabular-nums text-sky-600">{secondsLeft}</div>
       <div className="h-2 w-full max-w-xs overflow-hidden rounded-full bg-zinc-200">
         <div className="h-full bg-sky-600 transition-all" style={{ width: `${progress}%` }} />
       </div>
-      <div className="mt-4 flex gap-3">
+      <div className="mb-2 flex gap-3">
         <button
           onClick={() => setPaused((p) => !p)}
           className="rounded-xl bg-zinc-100 px-6 py-3 font-medium text-zinc-700 active:bg-zinc-200"
